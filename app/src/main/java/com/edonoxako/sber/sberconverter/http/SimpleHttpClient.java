@@ -1,10 +1,13 @@
-package com.edonoxako.sber.sberconverter;
+package com.edonoxako.sber.sberconverter.http;
+
+
+import com.edonoxako.sber.sberconverter.parser.ResponseParser;
 
 /**
  * Created by edono on 08.07.2017.
  */
 
-class SimpleHttpClient implements HttpClient {
+public class SimpleHttpClient implements HttpClient {
 
     public SimpleHttpClient(ResponseParser parser) {
 

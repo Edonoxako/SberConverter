@@ -1,6 +1,8 @@
 package com.edonoxako.sber.sberconverter;
 
-import com.github.tomakehurst.wiremock.client.WireMock;
+import com.edonoxako.sber.sberconverter.api.CurrencyApi;
+import com.edonoxako.sber.sberconverter.api.SimpleHttpCurrencyApi;
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
 import org.junit.Rule;

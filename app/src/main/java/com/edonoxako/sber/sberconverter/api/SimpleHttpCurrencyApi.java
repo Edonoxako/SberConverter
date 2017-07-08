@@ -1,4 +1,6 @@
-package com.edonoxako.sber.sberconverter;
+package com.edonoxako.sber.sberconverter.api;
+
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import java.util.List;
 
@@ -6,7 +8,7 @@ import java.util.List;
  * Created by edono on 08.07.2017.
  */
 
-class SimpleHttpCurrencyApi implements CurrencyApi {
+public class SimpleHttpCurrencyApi implements CurrencyApi {
     public SimpleHttpCurrencyApi(String hostUrl) {
 
     }
