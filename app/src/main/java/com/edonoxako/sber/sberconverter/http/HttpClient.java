@@ -7,5 +7,5 @@ import java.io.IOException;
  */
 
 public interface HttpClient {
-    <T> T getRequest(String uri, Class<T> clazz) throws IOException, HttpRequestException;
+    <T> T getRequest(String uri, Class<T> clazz) throws Exception;
 }

@@ -26,7 +26,7 @@ public class SimpleHttpClient implements HttpClient {
     }
 
     @Override
-    public <T> T getRequest(String uri, Class<T> clazz) throws IOException, HttpRequestException {
+    public <T> T getRequest(String uri, Class<T> clazz) throws Exception {
         URL url = new URL(uri);
         T response = null;
         InputStream stream = null;

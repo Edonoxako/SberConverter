@@ -7,5 +7,5 @@ import java.io.InputStream;
  */
 
 public interface ResponseParser {
-    <T> T parse(InputStream source, Class<T> clazz);
+    <T> T parse(InputStream source, Class<T> clazz) throws Exception;
 }

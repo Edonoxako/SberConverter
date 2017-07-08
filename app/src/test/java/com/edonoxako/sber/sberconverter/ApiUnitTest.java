@@ -32,11 +32,11 @@ public class ApiUnitTest {
                         .withHeader("Content-Type", "text/xml")
                         .withBody(mockResponseData())));
 
-        CurrencyRate audRate = new CurrencyRate(36, "AUD", 1, "Австралийский доллар", 45.8701d);
-        CurrencyRate gbpRate = new CurrencyRate(826, "GBP", 1, "Фунт стерлингов Соединенного королевства", 78.2273d);
-        CurrencyRate usdRate = new CurrencyRate(840, "USD", 1, "Доллар США", 60.3792);
-        CurrencyRate eurRate = new CurrencyRate(978, "EUR", 1, "Евро", 68.9470d);
-        CurrencyRate jpyRate = new CurrencyRate(392, "JPY", 100, "Японских иен", 53.0783d);
+        CurrencyRate audRate = new CurrencyRate("R01010", 36, "AUD", 1, "Австралийский доллар", 45.8701d);
+        CurrencyRate gbpRate = new CurrencyRate("R01035", 826, "GBP", 1, "Фунт стерлингов Соединенного королевства", 78.2273d);
+        CurrencyRate usdRate = new CurrencyRate("R01235", 840, "USD", 1, "Доллар США", 60.3792);
+        CurrencyRate eurRate = new CurrencyRate("R01239", 978, "EUR", 1, "Евро", 68.9470d);
+        CurrencyRate jpyRate = new CurrencyRate("R01820", 392, "JPY", 100, "Японских иен", 53.0783d);
 
         CurrencyApi api = new SimpleHttpCurrencyApi("http://localhost:" + wireMockRule.port());
         List<CurrencyRate> rates = api.getExchangeRates();
