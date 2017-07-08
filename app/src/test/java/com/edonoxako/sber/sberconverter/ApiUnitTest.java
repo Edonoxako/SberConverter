@@ -39,6 +39,7 @@ public class ApiUnitTest {
         CurrencyApi api = new SimpleHttpCurrencyApi("http://localhost:" + wireMockRule.port());
         List<CurrencyRate> rates = api.getExchangeRates();
 
+        verify(getRequestedFor(urlEqualTo("/scripts/XML_daily.asp")));
         assertEquals(audRate, rates.get(0));
         assertEquals(gbpRate, rates.get(1));
         assertEquals(usdRate, rates.get(2));
