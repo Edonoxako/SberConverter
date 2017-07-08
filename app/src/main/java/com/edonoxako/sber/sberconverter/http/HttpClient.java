@@ -8,4 +8,5 @@ import java.io.IOException;
 
 public interface HttpClient {
     <T> T getRequest(String uri, Class<T> clazz) throws Exception;
+    void setHeader(String name, String value);
 }

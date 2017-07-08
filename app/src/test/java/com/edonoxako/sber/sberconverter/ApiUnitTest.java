@@ -2,9 +2,14 @@ package com.edonoxako.sber.sberconverter;
 
 import com.edonoxako.sber.sberconverter.api.CurrencyApi;
 import com.edonoxako.sber.sberconverter.api.SimpleHttpCurrencyApi;
+import com.edonoxako.sber.sberconverter.http.HttpClient;
+import com.edonoxako.sber.sberconverter.http.SimpleHttpClient;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
+import com.edonoxako.sber.sberconverter.parser.ResponseParser;
+import com.edonoxako.sber.sberconverter.parser.XmlResponseParser;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -22,6 +27,15 @@ public class ApiUnitTest {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(wireMockConfig()
                                                             .dynamicPort());
+    private CurrencyApi api;
+
+    @Before
+    public void setUp() throws Exception {
+        ResponseParser parser = new XmlResponseParser();
+        HttpClient client = new SimpleHttpClient(parser);
+        client.setHeader("Accept", "text/xml");
+        api = new SimpleHttpCurrencyApi("http://localhost:" + wireMockRule.port(), client);
+    }
 
     @Test
     public void getCurrencyDataWhenResponseIsOk() throws Exception {
@@ -38,8 +52,7 @@ public class ApiUnitTest {
         CurrencyRate eurRate = new CurrencyRate("R01239", 978, "EUR", 1, "Евро", 68.9470d);
         CurrencyRate jpyRate = new CurrencyRate("R01820", 392, "JPY", 100, "Японских иен", 53.0783d);
 
-        CurrencyApi api = new SimpleHttpCurrencyApi("http://localhost:" + wireMockRule.port());
-        List<CurrencyRate> rates = api.getExchangeRates();
+        List<CurrencyRate> rates = api.getExchangeRates().asList();
 
         verify(getRequestedFor(urlEqualTo("/scripts/XML_daily.asp")));
         assertEquals(audRate, rates.get(0));

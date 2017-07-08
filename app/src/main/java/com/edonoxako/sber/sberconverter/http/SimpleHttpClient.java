@@ -3,11 +3,15 @@ package com.edonoxako.sber.sberconverter.http;
 
 import com.edonoxako.sber.sberconverter.parser.ResponseParser;
 
+import org.simpleframework.xml.transform.Matcher;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by edono on 08.07.2017.
@@ -21,8 +25,11 @@ public class SimpleHttpClient implements HttpClient {
 
     private ResponseParser parser;
 
+    private Map<String, String> headers;
+
     public SimpleHttpClient(ResponseParser parser) {
         this.parser = parser;
+        this.headers = new HashMap<>();
     }
 
     @Override
@@ -53,6 +60,11 @@ public class SimpleHttpClient implements HttpClient {
         return response;
     }
 
+    @Override
+    public void setHeader(String name, String value) {
+        headers.put(name, value);
+    }
+
     private void release(InputStream stream, HttpURLConnection connection) throws IOException {
         // Close Stream and disconnect HTTP connection.
         if (stream != null) {
@@ -68,5 +80,9 @@ public class SimpleHttpClient implements HttpClient {
         connection.setConnectTimeout(CONNECT_TIMEOUT);
         connection.setRequestMethod(GET_REQUEST_METHOD);
         connection.setDoInput(true);
+
+        for (Map.Entry<String, String> headerEntry : headers.entrySet()) {
+            connection.setRequestProperty(headerEntry.getKey(), headerEntry.getValue());
+        }
     }
 }
