@@ -1,4 +1,4 @@
-package com.edonoxako.sber.sberconverter;
+package com.edonoxako.sber.sberconverter.data;
 
 import android.provider.BaseColumns;
 
