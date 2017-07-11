@@ -5,6 +5,9 @@ import com.edonoxako.sber.sberconverter.api.CurrencyApi;
 import com.edonoxako.sber.sberconverter.cache.CurrencyCache;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 import com.edonoxako.sber.sberconverter.model.Rates;
+import com.edonoxako.sber.sberconverter.repository.CurrencyRepository;
+import com.edonoxako.sber.sberconverter.repository.NetworkChecker;
+import com.edonoxako.sber.sberconverter.repository.RemoteLocalRepository;
 
 import org.junit.Before;
 import org.junit.Test;
