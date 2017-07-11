@@ -9,7 +9,11 @@ import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 public class ExchangeRateEvaluator {
 
     public double evaluate(int nominal, CurrencyRate currencyFrom, CurrencyRate currencyTo) {
-        return 0;
+        if (nominal < 0) throw new IllegalArgumentException("Nominal is negative!");
+        return nominal * ( getValue(currencyFrom) / getValue(currencyTo) );
     }
 
+    private double getValue(CurrencyRate currencyRate) {
+        return currencyRate.getValue() / currencyRate.getNominal();
+    }
 }
