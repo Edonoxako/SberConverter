@@ -1,6 +1,7 @@
-package com.edonoxako.sber.sberconverter;
+package com.edonoxako.sber.sberconverter.cache;
 
 import com.edonoxako.sber.sberconverter.data.DbHelper;
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import java.util.List;
 
