@@ -29,4 +29,6 @@ public interface ConverterViewModel {
     double getLeftCurrencyValue();
 
     double getRightCurrencyValue();
+
+    void saveState();
 }

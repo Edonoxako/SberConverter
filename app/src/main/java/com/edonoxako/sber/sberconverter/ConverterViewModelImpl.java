@@ -121,4 +121,11 @@ public class ConverterViewModelImpl implements ConverterViewModel {
     public double getRightCurrencyValue() {
         return rightCurrencyValue;
     }
+
+    @Override
+    public void saveState() {
+        keeper.saveState(getLeftCurrencyCharCode(),
+                getRightCurrencyCharCode(),
+                getLeftCurrencyValue());
+    }
 }

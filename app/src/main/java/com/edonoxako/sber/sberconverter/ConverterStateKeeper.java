@@ -5,7 +5,7 @@ package com.edonoxako.sber.sberconverter;
  */
 
 public interface ConverterStateKeeper {
-    void saveState(String leftCurrencyCharCode, String rightCurrencyCharCode);
+    void saveState(String leftCurrencyCharCode, String rightCurrencyCharCode, double leftCurrencyValue);
     String restoreLeftCurrency();
     String restoreRightCurrency();
     double restoreLeftCurrencyValue();
