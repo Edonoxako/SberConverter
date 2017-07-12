@@ -19,8 +19,8 @@ public class ConverterViewModelImpl implements ConverterViewModel {
     private final ConverterStateKeeper keeper;
 
     private List<CurrencyRate> rates;
-    private CurrencyRate leftCurrency;
-    private CurrencyRate rightCurrency;
+    private int leftCurrencyIndex;
+    private int rightCurrencyIndex;
     private double leftCurrencyValue;
     private double rightCurrencyValue;
 
@@ -28,8 +28,8 @@ public class ConverterViewModelImpl implements ConverterViewModel {
         this.evaluator = evaluator;
         this.repository = repository;
         this.keeper = keeper;
-        this.leftCurrency = findRateByCharCode(keeper.restoreLeftCurrency());
-        this.rightCurrency = findRateByCharCode(keeper.restoreRightCurrency());
+        this.leftCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreLeftCurrency());
+        this.rightCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreRightCurrency());
         setLeftCurrencyValue(keeper.restoreLeftCurrencyValue());
     }
 
@@ -46,70 +46,65 @@ public class ConverterViewModelImpl implements ConverterViewModel {
         return rates;
     }
 
-    private CurrencyRate findRateByCharCode(String charCode) {
+    private int findCurrencyIndexByCharCode(String charCode) {
         List<CurrencyRate> allRates = getAllRates();
-        for (CurrencyRate rate : allRates) {
+        for (int i = 0; i < allRates.size(); i++) {
+            CurrencyRate rate = allRates.get(i);
             if (rate.getCharCode().equals(charCode)) {
-                return rate;
+                return i;
             }
         }
-        return null;
+        return -1;
     }
 
     @Override
     public void swap() {
-        CurrencyRate bufRate = rightCurrency;
-        double bufRateValue = rightCurrencyValue;
+        int bufIndex = rightCurrencyIndex;
+        double bufValue = rightCurrencyValue;
 
-        rightCurrency = leftCurrency;
+        rightCurrencyIndex = leftCurrencyIndex;
         rightCurrencyValue = leftCurrencyValue;
 
-        leftCurrency = bufRate;
-        leftCurrencyValue = bufRateValue;
+        leftCurrencyIndex = bufIndex;
+        leftCurrencyValue = bufValue;
     }
 
     @Override
-    public void setRightCurrencyCharCode(String charCode) {
-        List<CurrencyRate> allRates = getAllRates();
-        for (CurrencyRate rate : allRates) {
-            if (rate.getCharCode().equals(charCode)) {
-                rightCurrency = rate;
-                setLeftCurrencyValue(rightCurrencyValue);
-            }
-        }
+    public void setRightCurrencyIndex(int index) {
+        rightCurrencyIndex = index;
+        setLeftCurrencyValue(rightCurrencyValue);
     }
 
     @Override
-    public void setLeftCurrencyCharCode(String charCode) {
-        List<CurrencyRate> allRates = getAllRates();
-        for (CurrencyRate rate : allRates) {
-            if (rate.getCharCode().equals(charCode)) {
-                leftCurrency = rate;
-                setRightCurrencyValue(leftCurrencyValue);
-            }
-        }
+    public void setLeftCurrencyIndex(int index) {
+        leftCurrencyIndex = index;
+        setRightCurrencyValue(leftCurrencyValue);
     }
 
     @Override
     public void setLeftCurrencyValue(double value) {
         leftCurrencyValue = value;
+        CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
+        CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
         rightCurrencyValue = evaluator.evaluate((int) value, leftCurrency, rightCurrency);
     }
 
     @Override
     public void setRightCurrencyValue(double value) {
         rightCurrencyValue = value;
+        CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
+        CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
         leftCurrencyValue = evaluator.evaluate((int) value, rightCurrency, leftCurrency);
     }
 
     @Override
-    public String getLeftCurrencyCharCode() {
-        return leftCurrency.getCharCode();
+    public int getLeftCurrencyIndex() {
+        return leftCurrencyIndex;
     }
 
     @Override
-    public String getRightCurrencyCharCode() {
-        return rightCurrency.getCharCode();
+    public int getRightCurrencyIndex() {
+        return rightCurrencyIndex;
     }
 
     @Override
@@ -124,8 +119,11 @@ public class ConverterViewModelImpl implements ConverterViewModel {
 
     @Override
     public void saveState() {
-        keeper.saveState(getLeftCurrencyCharCode(),
-                getRightCurrencyCharCode(),
+        CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
+        CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
+
+        keeper.saveState(leftCurrency.getCharCode(),
+                rightCurrency.getCharCode(),
                 getLeftCurrencyValue());
     }
 }

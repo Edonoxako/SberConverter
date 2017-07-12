@@ -48,50 +48,50 @@ public class ConverterViewModelTest {
 
     @Test
     public void testSetLeftCurrency() throws Exception {
-        viewModel.setRightCurrencyCharCode("RUB");
-        viewModel.setLeftCurrencyCharCode("USD");
+        viewModel.setRightCurrencyIndex(1);
+        viewModel.setLeftCurrencyIndex(0);
         viewModel.setLeftCurrencyValue(1d);
-        String leftCharCode = viewModel.getLeftCurrencyCharCode();
-        String rightCharCode = viewModel.getRightCurrencyCharCode();
+        int leftCurrencyIndex = viewModel.getLeftCurrencyIndex();
+        int rightCurrencyIndex = viewModel.getRightCurrencyIndex();
         double leftValue = viewModel.getLeftCurrencyValue();
         double rightValue = viewModel.getRightCurrencyValue();
 
-        assertEquals("USD", leftCharCode);
-        assertEquals("RUB", rightCharCode);
+        assertEquals(0, leftCurrencyIndex);
+        assertEquals(1, rightCurrencyIndex);
         assertEquals(1, leftValue, 0.001);
         assertEquals(60.5, rightValue, 0.001);
     }
 
     @Test
     public void testSetRightCurrency() throws Exception {
-        viewModel.setLeftCurrencyCharCode("USD");
-        viewModel.setRightCurrencyCharCode("RUB");
+        viewModel.setLeftCurrencyIndex(0);
+        viewModel.setRightCurrencyIndex(1);
         viewModel.setRightCurrencyValue(1d);
-        String leftCharCode = viewModel.getLeftCurrencyCharCode();
-        String rightCharCode = viewModel.getRightCurrencyCharCode();
+        int leftCurrencyIndex = viewModel.getLeftCurrencyIndex();
+        int rightCurrencyIndex = viewModel.getRightCurrencyIndex();
         double leftValue = viewModel.getLeftCurrencyValue();
         double rightValue = viewModel.getRightCurrencyValue();
 
-        assertEquals("USD", leftCharCode);
-        assertEquals("RUB", rightCharCode);
+        assertEquals(0, leftCurrencyIndex);
+        assertEquals(1, rightCurrencyIndex);
         assertEquals(1 / 60.5, leftValue, 0.001);
         assertEquals(1, rightValue, 0.001);
     }
 
     @Test
     public void testSwap() throws Exception {
-        viewModel.setLeftCurrencyCharCode("USD");
-        viewModel.setRightCurrencyCharCode("RUB");
+        viewModel.setLeftCurrencyIndex(0);
+        viewModel.setRightCurrencyIndex(1);
         viewModel.setLeftCurrencyValue(1d);
         viewModel.swap();
 
-        String leftCharCode = viewModel.getLeftCurrencyCharCode();
-        String rightCharCode = viewModel.getRightCurrencyCharCode();
+        int leftCurrencyIndex = viewModel.getLeftCurrencyIndex();
+        int rightCurrencyIndex = viewModel.getRightCurrencyIndex();
         double leftValue = viewModel.getLeftCurrencyValue();
         double rightValue = viewModel.getRightCurrencyValue();
 
-        assertEquals("RUB", leftCharCode);
-        assertEquals("USD", rightCharCode);
+        assertEquals(1, leftCurrencyIndex);
+        assertEquals(0, rightCurrencyIndex);
         assertEquals(60.5, leftValue, 0.001);
         assertEquals(1, rightValue, 0.001);
     }

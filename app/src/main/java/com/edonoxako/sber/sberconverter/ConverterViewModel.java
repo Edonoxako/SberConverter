@@ -14,17 +14,17 @@ public interface ConverterViewModel {
 
     void swap();
 
-    void setRightCurrencyCharCode(String charCode);
+    void setRightCurrencyIndex(int index);
 
-    void setLeftCurrencyCharCode(String charCode);
+    void setLeftCurrencyIndex(int index);
 
     void setLeftCurrencyValue(double value);
 
     void setRightCurrencyValue(double value);
 
-    String getLeftCurrencyCharCode();
+    int getLeftCurrencyIndex();
 
-    String getRightCurrencyCharCode();
+    int getRightCurrencyIndex();
 
     double getLeftCurrencyValue();
 
