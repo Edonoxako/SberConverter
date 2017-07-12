@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SberConverter</string>
+    <string name="hint_nominal">Номинал</string>
 </resources>

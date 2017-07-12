@@ -1,8 +1,9 @@
 package com.edonoxako.sber.sberconverter;
 
+import com.edonoxako.sber.sberconverter.cache.SQLiteCache;
 import com.edonoxako.sber.sberconverter.data.DbHelper;
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +16,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.shortThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +34,7 @@ public class CacheTest {
     @Before
     public void setUp() throws Exception {
         cache = new SQLiteCache(dbHelper);
-        testRate = new CurrencyRate(1, "USD", 1, "Доллар", 60.5);
+        testRate = new CurrencyRate("A1", 1, "USD", 1, "Доллар", 60.5);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class CacheTest {
     @Test
     public void testGetByCharCode() throws Exception {
         when(dbHelper.queryRateByCharCode(anyString()))
-                .thenReturn(new CurrencyRate(1, "USD", 1, "Доллар", 60.5));
+                .thenReturn(new CurrencyRate("A1", 1, "USD", 1, "Доллар", 60.5));
 
         CurrencyRate rate = cache.getByCharCode("USD");
 

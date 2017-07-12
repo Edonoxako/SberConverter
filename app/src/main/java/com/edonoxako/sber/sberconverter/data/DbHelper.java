@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.edonoxako.sber.sberconverter.CurrencyRate;
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +120,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     private void populateValues(ContentValues cv, CurrencyRate rate) {
+        cv.put(CurrencyContract.RatesTable.COLUMN_RATE_ID, rate.getId());
         cv.put(CurrencyContract.RatesTable.COLUMN_NUM_CODE, rate.getNumCode());
         cv.put(CurrencyContract.RatesTable.COLUMN_CHAR_CODE, rate.getCharCode());
         cv.put(CurrencyContract.RatesTable.COLUMN_NAME, rate.getName());

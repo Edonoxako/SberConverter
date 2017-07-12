@@ -2,7 +2,7 @@ package com.edonoxako.sber.sberconverter.data;
 
 import android.database.Cursor;
 
-import com.edonoxako.sber.sberconverter.CurrencyRate;
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 /**
  * Created by Eugeny.Martinenko on 10.07.2017.
@@ -14,6 +14,10 @@ public class QueryResult {
 
     public QueryResult(Cursor cursor) {
         this.cursor = cursor;
+    }
+
+    public String getRateId() {
+        return cursor.getString(cursor.getColumnIndex(CurrencyContract.RatesTable.COLUMN_RATE_ID));
     }
 
     public int getNumCode() {
@@ -37,7 +41,7 @@ public class QueryResult {
     }
 
     public CurrencyRate asRate() {
-        return new CurrencyRate(getNumCode(), getCharCode(), getNominal(), getName(), getValue());
+        return new CurrencyRate(getRateId(), getNumCode(), getCharCode(), getNominal(), getName(), getValue());
     }
 
     public boolean hasNext() {

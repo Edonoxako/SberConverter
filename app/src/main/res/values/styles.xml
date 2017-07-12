@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CurrencyEditText">
+        <item name="android:hint">@string/hint_nominal</item>
+        <item name="android:inputType">numberSigned</item>
+        <item name="android:width">96dp</item>
+        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:textColorHint">@android:color/background_light</item>
+        <!--<item name="android:backgroundTint">@android:color/background_light</item>-->
+    </style>
+
 </resources>

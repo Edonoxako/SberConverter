@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.edonoxako.sber.sberconverter.data.CurrencyContract;
 import com.edonoxako.sber.sberconverter.data.DbHelper;
+import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,6 +47,7 @@ public class DataBaseTest {
     @Test
     public void testBaseInsertAndRead() throws Exception {
         ContentValues cv = new ContentValues();
+        cv.put(CurrencyContract.RatesTable.COLUMN_RATE_ID, "testId");
         cv.put(CurrencyContract.RatesTable.COLUMN_NUM_CODE, 1);
         cv.put(CurrencyContract.RatesTable.COLUMN_CHAR_CODE, "USD");
         cv.put(CurrencyContract.RatesTable.COLUMN_NAME, "Американский доллар");
@@ -59,6 +61,7 @@ public class DataBaseTest {
         Cursor cursor = db.query(CurrencyContract.RatesTable.TABLE_NAME, null, null, null, null, null, null);
         cursor.moveToFirst();
 
+        String rateId = cursor.getString(cursor.getColumnIndex(CurrencyContract.RatesTable.COLUMN_RATE_ID));
         int numCode = cursor.getInt(cursor.getColumnIndex(CurrencyContract.RatesTable.COLUMN_NUM_CODE));
         String charCode = cursor.getString(cursor.getColumnIndex(CurrencyContract.RatesTable.COLUMN_CHAR_CODE));
         String name = cursor.getString(cursor.getColumnIndex(CurrencyContract.RatesTable.COLUMN_NAME));
@@ -68,6 +71,7 @@ public class DataBaseTest {
         cursor.close();
         db.close();
 
+        assertEquals("testId", rateId);
         assertEquals(1, numCode);
         assertEquals("USD", charCode);
         assertEquals("Американский доллар", name);
@@ -77,7 +81,7 @@ public class DataBaseTest {
 
     @Test
     public void testSimplifiedInsertAndRead() throws Exception {
-        CurrencyRate testRate = new CurrencyRate(1, "USD", 1, "Американский доллар", 60.5);
+        CurrencyRate testRate = new CurrencyRate("A1", 1, "USD", 1, "Американский доллар", 60.5);
 
         dbHelper.insert(testRate);
         CurrencyRate insertedRate = dbHelper.queryRateByCharCode("USD");
@@ -88,9 +92,9 @@ public class DataBaseTest {
     @Test
     public void testInsertListOfRates() throws Exception {
         List<CurrencyRate> testRates = new ArrayList<>();
-        testRates.add(new CurrencyRate(1, "USD", 1, "Американский доллар", 60.5));
-        testRates.add(new CurrencyRate(2, "EUR", 1, "Евро", 70.5));
-        testRates.add(new CurrencyRate(3, "JPY", 100, "Японских йен", 50));
+        testRates.add(new CurrencyRate("A1", 1, "USD", 1, "Американский доллар", 60.5d));
+        testRates.add(new CurrencyRate("A2", 2, "EUR", 1, "Евро", 70.5d));
+        testRates.add(new CurrencyRate("A3", 3, "JPY", 100, "Японских йен", 50d));
 
         testWithListOFRates(testRates);
     }
@@ -98,14 +102,14 @@ public class DataBaseTest {
     @Test
     public void testInsertAndReplaceListOfRates() throws Exception {
         List<CurrencyRate> testRates1 = new ArrayList<>();
-        testRates1.add(new CurrencyRate(1, "USD", 1, "Американский доллар", 60.5));
-        testRates1.add(new CurrencyRate(2, "EUR", 1, "Евро", 70.5));
-        testRates1.add(new CurrencyRate(3, "JPY", 100, "Японских йен", 50));
+        testRates1.add(new CurrencyRate("A1", 1, "USD", 1, "Американский доллар", 60.5d));
+        testRates1.add(new CurrencyRate("A2", 2, "EUR", 1, "Евро", 70.5d));
+        testRates1.add(new CurrencyRate("A3", 3, "JPY", 100, "Японских йен", 50d));
 
         List<CurrencyRate> testRates2 = new ArrayList<>();
-        testRates2.add(new CurrencyRate(4, "GBP", 1, "Фунт стерлингов Соединенного королевства", 78.2));
-        testRates2.add(new CurrencyRate(5, "AMD", 1, "Армянских драмов", 12.5));
-        testRates2.add(new CurrencyRate(6, "BYN", 1, "Белорусский рубль", 30.5));
+        testRates2.add(new CurrencyRate("A4", 4, "GBP", 1, "Фунт стерлингов Соединенного королевства", 78.2d));
+        testRates2.add(new CurrencyRate("A5", 5, "AMD", 1, "Армянских драмов", 12.5d));
+        testRates2.add(new CurrencyRate("A6", 6, "BYN", 1, "Белорусский рубль", 30.5d));
 
         testWithListOFRates(testRates1);
         testWithListOFRates(testRates2);
@@ -144,7 +148,7 @@ public class DataBaseTest {
 
     @Test
     public void testQueryByCharCodeWhenEntryIsMissing() throws Exception {
-        dbHelper.insert(new CurrencyRate(1, "USD", 1, "Американский доллар", 60.5));
+        dbHelper.insert(new CurrencyRate("A1", 1, "USD", 1, "Американский доллар", 60.5));
 
         CurrencyRate rate = dbHelper.queryRateByCharCode("EUR");
 
