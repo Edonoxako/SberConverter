@@ -9,8 +9,8 @@ import java.util.List;
  */
 
 public interface ConverterView {
-    void showLeftCurrencyCode(String currencyCode);
-    void showRightCurrencyCode(String currencyCode);
+    void showLeftCurrencyCode(int currencyCodeIndex);
+    void showRightCurrencyCode(int currencyCodeIndex);
     void showLeftCurrencyValue(double value);
     void showRightCurrencyValue(double value);
     void setCurrencyRatesList(List<CurrencyRate> rates);
