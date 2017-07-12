@@ -10,7 +10,9 @@ import android.support.v4.app.Fragment;
 
 public class RetainConverterPresenter extends Fragment implements ConverterPresenter {
 
-
+    public static RetainConverterPresenter getInstance() {
+        return new RetainConverterPresenter();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
