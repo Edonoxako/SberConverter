@@ -14,7 +14,7 @@ public class SharedPreferencesConverterStateKeeper implements ConverterStateKeep
     private static final String PREF_RIGHT_CURRENCY = "rightCurrency";
     private static final String PREF_LEFT_CURRENCY_VALUE = "leftCurrencyValue";
 
-    private static final String DEFAULT_LEFT_CURRENCY = "RUB";
+    private static final String DEFAULT_LEFT_CURRENCY = "EUR";
     private static final String DEFAULT_RIGHT_CURRENCY = "USD";
     private static final int DEFAULT_LEFT_CURRENCY_VALUE = 1;
 

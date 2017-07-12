@@ -15,8 +15,8 @@ import java.util.Objects;
 @Root
 public class Rates {
 
-    @Attribute(name = "Date") private String date;
-    @Attribute(name = "name") private String name;
+    @Attribute(name = "Date", required = false) private String date;
+    @Attribute(name = "name", required = false) private String name;
     @ElementList(inline = true, entry = "Valute") private List<CurrencyRate> rates;
 
     public Rates() {

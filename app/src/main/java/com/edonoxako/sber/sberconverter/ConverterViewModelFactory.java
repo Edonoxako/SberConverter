@@ -29,7 +29,7 @@ public class ConverterViewModelFactory {
 
         ResponseParser parser = new XmlResponseParser();
         HttpClient client = new SimpleHttpClient(parser);
-        CurrencyApi api = new SimpleHttpCurrencyApi("http://localhost", client);
+        CurrencyApi api = new SimpleHttpCurrencyApi("http://www.cbr.ru", client);
 
         DbHelper dbHelper = new DbHelper(context);
         CurrencyCache cache  = new SQLiteCache(dbHelper);

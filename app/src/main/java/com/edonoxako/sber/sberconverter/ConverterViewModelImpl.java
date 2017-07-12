@@ -28,6 +28,10 @@ public class ConverterViewModelImpl implements ConverterViewModel {
         this.evaluator = evaluator;
         this.repository = repository;
         this.keeper = keeper;
+    }
+
+    @Override
+    public void init() {
         this.leftCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreLeftCurrency());
         this.rightCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreRightCurrency());
         setLeftCurrencyValue(keeper.restoreLeftCurrencyValue());

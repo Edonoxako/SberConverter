@@ -17,6 +17,7 @@ public class SimpleHttpCurrencyApi implements CurrencyApi {
     public SimpleHttpCurrencyApi(String hostUrl, HttpClient client) {
         this.hostUrl = hostUrl;
         this.client = client;
+        this.client.setHeader("Accept", "text/xml");
     }
 
     @Override

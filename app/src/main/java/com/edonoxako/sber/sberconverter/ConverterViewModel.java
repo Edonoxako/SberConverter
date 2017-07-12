@@ -10,7 +10,9 @@ import java.util.List;
  */
 
 public interface ConverterViewModel {
-    List<CurrencyRate> getAllRates() throws ApiErrorException;
+    void init();
+
+    List<CurrencyRate> getAllRates();
 
     void swap();
 
