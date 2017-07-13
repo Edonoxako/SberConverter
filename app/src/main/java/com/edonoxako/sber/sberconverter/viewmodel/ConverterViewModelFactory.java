@@ -24,6 +24,9 @@ import com.edonoxako.sber.sberconverter.repository.RemoteLocalRepository;
  */
 
 public class ConverterViewModelFactory {
+
+    private static final String HOST_CBR = "http://www.cbr.ru";
+
     public static ConverterViewModel newConverterViewModel(Context context) {
         ExchangeRateEvaluator evaluator = new ExchangeRateEvaluator();
 
@@ -31,7 +34,7 @@ public class ConverterViewModelFactory {
 
         ResponseParser parser = new XmlResponseParser();
         HttpClient client = new SimpleHttpClient(parser);
-        CurrencyApi api = new SimpleHttpCurrencyApi("http://www.cbr.ru", client);
+        CurrencyApi api = new SimpleHttpCurrencyApi(HOST_CBR, client);
 
         DbHelper dbHelper = new DbHelper(context);
         CurrencyCache cache  = new SQLiteCache(dbHelper);

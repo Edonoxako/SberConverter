@@ -1,7 +1,5 @@
 package com.edonoxako.sber.sberconverter.model;
 
-import android.content.pm.LabeledIntent;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;

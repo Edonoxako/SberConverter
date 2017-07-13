@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 
 import com.edonoxako.sber.sberconverter.R;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     private LinearLayoutCompat layoutFirstCurrency;
     private LinearLayoutCompat layoutSecondCurrency;
     private AppCompatButton buttonRefresh;
+    private FrameLayout layoutRefreshContainer;
 
     private ConverterPresenter presenter;
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
         layoutFirstCurrency = (LinearLayoutCompat) findViewById(R.id.layout_first_currency);
         layoutSecondCurrency = (LinearLayoutCompat) findViewById(R.id.layout_second_currency);
         buttonRefresh = (AppCompatButton) findViewById(R.id.refresh_button);
+        layoutRefreshContainer = (FrameLayout) findViewById(R.id.layout_refresh_container);
 
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
 
     private void hideErrorMessage() {
         textErrorMessage.setVisibility(View.GONE);
-        buttonRefresh.setVisibility(View.GONE);
+        layoutRefreshContainer.setVisibility(View.GONE);
         layoutFirstCurrency.setVisibility(View.VISIBLE);
         layoutSecondCurrency.setVisibility(View.VISIBLE);
     }
@@ -242,6 +245,6 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
         layoutFirstCurrency.setVisibility(View.GONE);
         layoutSecondCurrency.setVisibility(View.GONE);
         textErrorMessage.setVisibility(View.VISIBLE);
-        buttonRefresh.setVisibility(View.VISIBLE);
+        layoutRefreshContainer.setVisibility(View.VISIBLE);
     }
 }
