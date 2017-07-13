@@ -1,7 +1,7 @@
 package com.edonoxako.sber.sberconverter;
 
-import com.edonoxako.sber.sberconverter.cache.SQLiteCache;
-import com.edonoxako.sber.sberconverter.data.DbHelper;
+import com.edonoxako.sber.sberconverter.repository.cache.SQLiteCache;
+import com.edonoxako.sber.sberconverter.repository.cache.data.DbHelper;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import org.junit.Before;

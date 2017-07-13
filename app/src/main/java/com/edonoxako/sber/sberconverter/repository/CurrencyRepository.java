@@ -1,6 +1,6 @@
 package com.edonoxako.sber.sberconverter.repository;
 
-import com.edonoxako.sber.sberconverter.api.ApiErrorException;
+import com.edonoxako.sber.sberconverter.repository.api.ApiErrorException;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import java.util.List;

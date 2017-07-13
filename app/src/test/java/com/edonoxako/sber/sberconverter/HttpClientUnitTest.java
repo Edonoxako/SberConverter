@@ -1,13 +1,11 @@
 package com.edonoxako.sber.sberconverter;
 
-import com.edonoxako.sber.sberconverter.http.HttpClient;
-import com.edonoxako.sber.sberconverter.http.HttpRequestException;
-import com.edonoxako.sber.sberconverter.http.SimpleHttpClient;
-import com.edonoxako.sber.sberconverter.parser.ResponseParser;
-import com.github.tomakehurst.wiremock.common.Strings;
+import com.edonoxako.sber.sberconverter.repository.api.http.HttpClient;
+import com.edonoxako.sber.sberconverter.repository.api.http.HttpRequestException;
+import com.edonoxako.sber.sberconverter.repository.api.http.SimpleHttpClient;
+import com.edonoxako.sber.sberconverter.repository.api.parser.ResponseParser;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

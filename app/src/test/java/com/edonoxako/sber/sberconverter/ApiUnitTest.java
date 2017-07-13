@@ -1,12 +1,12 @@
 package com.edonoxako.sber.sberconverter;
 
-import com.edonoxako.sber.sberconverter.api.CurrencyApi;
-import com.edonoxako.sber.sberconverter.api.SimpleHttpCurrencyApi;
-import com.edonoxako.sber.sberconverter.http.HttpClient;
-import com.edonoxako.sber.sberconverter.http.SimpleHttpClient;
+import com.edonoxako.sber.sberconverter.repository.api.CurrencyApi;
+import com.edonoxako.sber.sberconverter.repository.api.SimpleHttpCurrencyApi;
+import com.edonoxako.sber.sberconverter.repository.api.http.HttpClient;
+import com.edonoxako.sber.sberconverter.repository.api.http.SimpleHttpClient;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
-import com.edonoxako.sber.sberconverter.parser.ResponseParser;
-import com.edonoxako.sber.sberconverter.parser.XmlResponseParser;
+import com.edonoxako.sber.sberconverter.repository.api.parser.ResponseParser;
+import com.edonoxako.sber.sberconverter.repository.api.parser.XmlResponseParser;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
 import org.junit.Before;

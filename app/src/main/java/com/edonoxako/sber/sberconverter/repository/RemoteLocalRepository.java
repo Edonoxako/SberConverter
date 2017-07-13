@@ -1,9 +1,10 @@
 package com.edonoxako.sber.sberconverter.repository;
 
-import com.edonoxako.sber.sberconverter.api.ApiErrorException;
-import com.edonoxako.sber.sberconverter.api.CurrencyApi;
-import com.edonoxako.sber.sberconverter.cache.CurrencyCache;
+import com.edonoxako.sber.sberconverter.repository.api.ApiErrorException;
+import com.edonoxako.sber.sberconverter.repository.api.CurrencyApi;
+import com.edonoxako.sber.sberconverter.repository.cache.CurrencyCache;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
+import com.edonoxako.sber.sberconverter.util.networkchecker.NetworkChecker;
 
 import java.util.List;
 

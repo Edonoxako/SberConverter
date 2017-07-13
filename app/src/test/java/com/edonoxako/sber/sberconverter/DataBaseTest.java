@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.edonoxako.sber.sberconverter.data.CurrencyContract;
-import com.edonoxako.sber.sberconverter.data.DbHelper;
+import com.edonoxako.sber.sberconverter.repository.cache.data.CurrencyContract;
+import com.edonoxako.sber.sberconverter.repository.cache.data.DbHelper;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 
 import org.junit.After;

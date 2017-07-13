@@ -4,102 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.edonoxako.sber.sberconverter.MainActivity"
+    tools:context="com.edonoxako.sber.sberconverter.view.MainActivity"
+    android:background="@color/colorPrimaryDark"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
+
 
     <android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/view_background"
+        android:id="@+id/layout_first_currency"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_marginTop="0dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/layout_right_currency"
-            android:layout_width="156dp"
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_currency_first"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:backgroundTint="@android:color/background_light"
+            android:spinnerMode="dialog" />
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinner_currency_right"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@android:color/background_light"
-                android:spinnerMode="dialog" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_nominal_right"
-                style="@style/CurrencyEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@android:color/background_light"
-                android:ems="10" />
-        </android.support.v7.widget.LinearLayoutCompat>
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/button_swap_currencies"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_nominal_first"
+            style="@style/CurrencyEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:tint="@android:color/background_light"
-            app:srcCompat="@drawable/ic_swap_horiz_24dp" />
-
-        <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/layout_left_currency"
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinner_currency_left"
-                style="@style/SpinnerItemsStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@android:color/background_light"
-                android:spinnerMode="dialog" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edit_nominal_left"
-                style="@style/CurrencyEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@android:color/background_light"
-                android:ems="10" />
-        </android.support.v7.widget.LinearLayoutCompat>
-
+            android:backgroundTint="@android:color/background_light"
+            android:ems="10"
+            android:textSize="30sp" />
     </android.support.v7.widget.LinearLayoutCompat>
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/layout_second_currency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        tools:listitem="@layout/item_currency"
-        android:id="@+id/recyclerView"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_currency_second"
+            style="@style/SpinnerItemsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/background_light"
+            android:spinnerMode="dialog" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit_nominal_second"
+            style="@style/CurrencyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/background_light"
+            android:ems="10"
+            android:textSize="30sp" />
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </android.support.v7.widget.LinearLayoutCompat>

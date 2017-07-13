@@ -2,8 +2,8 @@ package com.edonoxako.sber.sberconverter;
 
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 import com.edonoxako.sber.sberconverter.model.Rates;
-import com.edonoxako.sber.sberconverter.parser.ResponseParser;
-import com.edonoxako.sber.sberconverter.parser.XmlResponseParser;
+import com.edonoxako.sber.sberconverter.repository.api.parser.ResponseParser;
+import com.edonoxako.sber.sberconverter.repository.api.parser.XmlResponseParser;
 
 import org.junit.Before;
 import org.junit.Test;
