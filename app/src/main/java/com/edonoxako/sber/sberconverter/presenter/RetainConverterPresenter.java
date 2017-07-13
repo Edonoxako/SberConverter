@@ -76,6 +76,11 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         new SetLeftCurrencyValueTask().execute(value);
     }
 
+    @Override
+    public void refreshRates() {
+        new GetAllRatesTask().execute();
+    }
+
     private void updateView() {
         updateLeftCurrency();
         updateRightCurrency();

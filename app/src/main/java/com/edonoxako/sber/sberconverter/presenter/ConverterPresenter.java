@@ -9,4 +9,5 @@ public interface ConverterPresenter {
     void setLeftCurrencyIndex(int currencyIndex);
     void setRightCurrencyValue(double value);
     void setLeftCurrencyValue(double value);
+    void refreshRates();
 }

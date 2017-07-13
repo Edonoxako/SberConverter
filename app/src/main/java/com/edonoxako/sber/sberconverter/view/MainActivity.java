@@ -2,6 +2,7 @@ package com.edonoxako.sber.sberconverter.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     private AppCompatTextView textErrorMessage;
     private LinearLayoutCompat layoutFirstCurrency;
     private LinearLayoutCompat layoutSecondCurrency;
+    private AppCompatButton buttonRefresh;
 
     private ConverterPresenter presenter;
 
@@ -65,6 +67,14 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
         textErrorMessage = (AppCompatTextView) findViewById(R.id.text_error);
         layoutFirstCurrency = (LinearLayoutCompat) findViewById(R.id.layout_first_currency);
         layoutSecondCurrency = (LinearLayoutCompat) findViewById(R.id.layout_second_currency);
+        buttonRefresh = (AppCompatButton) findViewById(R.id.refresh_button);
+
+        buttonRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.refreshRates();
+            }
+        });
 
         spinnerCurrencySecond.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -201,6 +211,8 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
 
     @Override
     public void setCurrencyRatesList(List<CurrencyRate> rates) {
+        hideErrorMessage();
+
         List<String> charCodes = new ArrayList<>();
         for (CurrencyRate rate : rates) {
             charCodes.add(String.format("%s (%s)", rate.getName(), rate.getCharCode()));
@@ -215,9 +227,21 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
 
     @Override
     public void showMessage(String message) {
+        displayErrorMessage();
+        textErrorMessage.setText(message);
+    }
+
+    private void hideErrorMessage() {
+        textErrorMessage.setVisibility(View.GONE);
+        buttonRefresh.setVisibility(View.GONE);
+        layoutFirstCurrency.setVisibility(View.VISIBLE);
+        layoutSecondCurrency.setVisibility(View.VISIBLE);
+    }
+
+    private void displayErrorMessage() {
         layoutFirstCurrency.setVisibility(View.GONE);
         layoutSecondCurrency.setVisibility(View.GONE);
         textErrorMessage.setVisibility(View.VISIBLE);
-        textErrorMessage.setText(message);
+        buttonRefresh.setVisibility(View.VISIBLE);
     }
 }

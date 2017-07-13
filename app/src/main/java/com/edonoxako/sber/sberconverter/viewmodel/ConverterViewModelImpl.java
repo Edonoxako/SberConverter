@@ -40,7 +40,7 @@ public class ConverterViewModelImpl implements ConverterViewModel {
 
     @Override
     public List<CurrencyRate> getAllRates() throws ApiErrorException {
-        if (rates == null) {
+        if (rates == null || rates.isEmpty()) {
             rates = repository.getCurrencyRates();
         }
         return rates;
