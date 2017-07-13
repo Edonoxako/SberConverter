@@ -22,11 +22,11 @@ public class CurrencyRate {
     public CurrencyRate() {}
 
     public CurrencyRate(String id, int numCode, String charCode, int nominal, String name, Double value) {
-        this.id = id;
+        this.id = id.trim();
         this.numCode = numCode;
-        this.charCode = charCode;
+        this.charCode = charCode.trim();
         this.nominal = nominal;
-        this.name = name;
+        this.name = name.trim();
         this.value = value;
     }
 

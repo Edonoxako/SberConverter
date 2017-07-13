@@ -1,109 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.edonoxako.sber.sberconverter.MainActivity"
     tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:orientation="vertical">
 
-    <View
+    <android.support.v7.widget.LinearLayoutCompat
         android:id="@+id/view_background"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="96dp"
+        android:layout_marginTop="0dp"
         android:background="@color/colorPrimaryDark"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <Spinner
-        android:id="@+id/spinner_currency_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:backgroundTint="@android:color/background_light"
-        android:spinnerMode="dialog"
-        app:layout_constraintTop_toTopOf="@+id/view_background"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/edit_nominal_left"
-        app:layout_constraintBottom_toTopOf="@+id/edit_nominal_left"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/edit_nominal_left" />
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/layout_right_currency"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner_currency_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/background_light"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/edit_nominal_right"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/edit_nominal_right"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/edit_nominal_right" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_currency_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@android:color/background_light"
+                android:spinnerMode="dialog" />
 
-    <EditText
-        android:id="@+id/edit_nominal_right"
-        style="@style/CurrencyEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:backgroundTint="@android:color/background_light"
-        android:ems="10"
-        app:layout_constraintBottom_toBottomOf="@+id/view_background"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/view_background" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edit_nominal_right"
+                style="@style/CurrencyEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@android:color/background_light"
+                android:ems="10" />
+        </android.support.v7.widget.LinearLayoutCompat>
 
-    <EditText
-        android:id="@+id/edit_nominal_left"
-        style="@style/CurrencyEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/background_light"
-        android:ems="10"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/view_background" />
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/button_swap_currencies"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:tint="@android:color/background_light"
+            app:srcCompat="@drawable/ic_swap_horiz_24dp" />
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/layout_left_currency"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner_currency_left"
+                style="@style/SpinnerItemsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@android:color/background_light"
+                android:spinnerMode="dialog" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edit_nominal_left"
+                style="@style/CurrencyEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@android:color/background_light"
+                android:ems="10" />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </android.support.v7.widget.LinearLayoutCompat>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_background"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_currency"
-        android:id="@+id/recyclerView" />
-
-    <ImageButton
-        android:id="@+id/button_swap_currencies"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:tint="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintLeft_toRightOf="@+id/edit_nominal_left"
-        app:layout_constraintRight_toLeftOf="@+id/edit_nominal_right"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_swap_horiz_24dp" />
+        tools:listitem="@layout/item_currency"
+        android:id="@+id/recyclerView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
-</android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.LinearLayoutCompat>

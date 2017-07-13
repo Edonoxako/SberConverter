@@ -2,6 +2,9 @@ package com.edonoxako.sber.sberconverter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -22,11 +25,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ConverterView {
 
-    private Spinner spinnerCurrencyLeft;
-    private Spinner spinnerCurrencyRight;
-    private EditText editNominalLeft;
-    private EditText editNominalRight;
-    private ImageButton buttonSwapCurrencies;
+    private AppCompatSpinner spinnerCurrencyLeft;
+    private AppCompatSpinner spinnerCurrencyRight;
+    private AppCompatEditText editNominalLeft;
+    private AppCompatEditText editNominalRight;
+    private AppCompatImageButton buttonSwapCurrencies;
 
     private ConverterPresenter presenter;
 
@@ -44,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     }
 
     private void initViews() {
-        spinnerCurrencyLeft = (Spinner) findViewById(R.id.spinner_currency_left);
-        spinnerCurrencyRight = (Spinner) findViewById(R.id.spinner_currency_right);
-        editNominalLeft = (EditText) findViewById(R.id.edit_nominal_left);
-        editNominalRight = (EditText) findViewById(R.id.edit_nominal_right);
-        buttonSwapCurrencies = (ImageButton) findViewById(R.id.button_swap_currencies);
+        spinnerCurrencyLeft = (AppCompatSpinner) findViewById(R.id.spinner_currency_left);
+        spinnerCurrencyRight = (AppCompatSpinner) findViewById(R.id.spinner_currency_right);
+        editNominalLeft = (AppCompatEditText) findViewById(R.id.edit_nominal_left);
+        editNominalRight = (AppCompatEditText) findViewById(R.id.edit_nominal_right);
+        buttonSwapCurrencies = (AppCompatImageButton) findViewById(R.id.button_swap_currencies);
 
         buttonSwapCurrencies.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +94,12 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (notUserInput) return;
                 try {
-                    Double value = currencyFormatter.parse(s.toString()).doubleValue();
+                    Double value;
+                    if (s.toString().isEmpty()) {
+                        value = 0d;
+                    } else {
+                        value = currencyFormatter.parse(s.toString()).doubleValue();
+                    }
                     presenter.setLeftCurrencyValue(value);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -114,7 +122,12 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (notUserInput) return;
                 try {
-                    Double value = currencyFormatter.parse(s.toString()).doubleValue();
+                    Double value;
+                    if (s.toString().isEmpty()) {
+                        value = 0d;
+                    } else {
+                        value = currencyFormatter.parse(s.toString()).doubleValue();
+                    }
                     presenter.setRightCurrencyValue(value);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -158,10 +171,13 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     public void setCurrencyRatesList(List<CurrencyRate> rates) {
         List<String> charCodes = new ArrayList<>();
         for (CurrencyRate rate : rates) {
-            charCodes.add(rate.getCharCode());
+            charCodes.add(String.format("%s (%s)", rate.getName(), rate.getCharCode()));
         }
 
-        SpinnerAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, charCodes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, charCodes);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+
         spinnerCurrencyLeft.setAdapter(adapter);
         spinnerCurrencyRight.setAdapter(adapter);
     }
