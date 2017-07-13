@@ -5,11 +5,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
+import com.edonoxako.sber.sberconverter.R;
+import com.edonoxako.sber.sberconverter.repository.api.ApiErrorException;
 import com.edonoxako.sber.sberconverter.view.ConverterView;
 import com.edonoxako.sber.sberconverter.viewmodel.ConverterViewModel;
 import com.edonoxako.sber.sberconverter.viewmodel.ConverterViewModelFactory;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
+import com.edonoxako.sber.sberconverter.viewmodel.UnknownCurrencyException;
 
 import java.util.List;
 
@@ -18,6 +22,8 @@ import java.util.List;
  */
 
 public class RetainConverterPresenter extends Fragment implements ConverterPresenter {
+
+    private static final String TAG = "ConverterPresenter";
 
     public static RetainConverterPresenter getInstance() {
         return new RetainConverterPresenter();
@@ -51,11 +57,6 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
     }
 
     @Override
-    public void loadCurrencies() {
-        new GetAllRatesTask().execute();
-    }
-
-    @Override
     public void setRightCurrencyIndex(int currencyIndex) {
         new SetRightCurrencyTask().execute(currencyIndex);
     }
@@ -75,11 +76,6 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         new SetLeftCurrencyValueTask().execute(value);
     }
 
-    @Override
-    public void swapCurrencies() {
-        new SwapTask().execute();
-    }
-
     private void updateView() {
         updateLeftCurrency();
         updateRightCurrency();
@@ -95,90 +91,148 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         view.showRightCurrencyValue(viewModel.getRightCurrencyValue());
     }
 
-    private class GetAllRatesTask extends AsyncTask<Void, Void, List<CurrencyRate>> {
+
+    /*
+    * Set of async tasks are needed to put all viewmodel job out of main thread
+    */
+    private class GetAllRatesTask extends AsyncTask<Void, Void, Result<List<CurrencyRate>>> {
 
         @Override
-        protected List<CurrencyRate> doInBackground(Void... params) {
-            viewModel.init();
-            return viewModel.getAllRates();
+        protected Result<List<CurrencyRate>> doInBackground(Void... params) {
+            try {
+                viewModel.init();
+                return new Result<>(viewModel.getAllRates());
+            } catch (UnknownCurrencyException | ApiErrorException e) {
+                Log.e(TAG, "doInBackground: error during GetAllRatesTask", e);
+                return new Result<>(e);
+            }
         }
 
         @Override
-        protected void onPostExecute(List<CurrencyRate> currencyRates) {
-            super.onPostExecute(currencyRates);
-            view.setCurrencyRatesList(currencyRates);
-            updateView();
-        }
-    }
-
-    private class SetRightCurrencyTask extends AsyncTask<Integer, Void, Void> {
-        @Override
-        protected Void doInBackground(Integer... params) {
-            viewModel.setRightCurrencyIndex(params[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            updateLeftCurrency();
-        }
-    }
-
-    private class SetLeftCurrencyTask extends AsyncTask<Integer, Void, Void> {
-        @Override
-        protected Void doInBackground(Integer... params) {
-            viewModel.setLeftCurrencyIndex(params[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            updateRightCurrency();
+        protected void onPostExecute(Result<List<CurrencyRate>> result) {
+            super.onPostExecute(result);
+            if (result.isError()) {
+                view.showMessage(getString(R.string.error_message));
+            } else {
+                view.setCurrencyRatesList(result.data);
+                updateView();
+            }
         }
     }
 
-    private class SetRightCurrencyValueTask extends AsyncTask<Double, Void, Void> {
+    private class SetRightCurrencyTask extends AsyncTask<Integer, Void, Result> {
         @Override
-        protected Void doInBackground(Double... params) {
-            viewModel.setRightCurrencyValue(params[0]);
-            return null;
+        protected Result doInBackground(Integer... params) {
+            try {
+                viewModel.setRightCurrencyIndex(params[0]);
+                return new Result();
+            } catch (ApiErrorException e) {
+                Log.e(TAG, "doInBackground: error during SetRightCurrencyTask", e);
+                return new Result(e);
+            }
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            updateLeftCurrency();
-        }
-    }
-
-    private class SetLeftCurrencyValueTask extends AsyncTask<Double, Void, Void> {
-        @Override
-        protected Void doInBackground(Double... params) {
-            viewModel.setLeftCurrencyValue(params[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            updateRightCurrency();
+        protected void onPostExecute(Result result) {
+            super.onPostExecute(result);
+            if (result.isError()) {
+                view.showMessage(getString(R.string.error_message));
+            } else {
+                updateLeftCurrency();
+            }
         }
     }
 
-    private class SwapTask extends AsyncTask<Void, Void, Void> {
-
+    private class SetLeftCurrencyTask extends AsyncTask<Integer, Void, Result> {
         @Override
-        protected Void doInBackground(Void... params) {
-            viewModel.swap();
-            return null;
+        protected Result doInBackground(Integer... params) {
+            try {
+                viewModel.setLeftCurrencyIndex(params[0]);
+                return new Result();
+            } catch (ApiErrorException e) {
+                Log.e(TAG, "doInBackground: error during SetRightCurrencyTask", e);
+                return new Result(e);
+            }
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            updateView();
+        protected void onPostExecute(Result result) {
+            super.onPostExecute(result);
+            if (result.isError()) {
+                view.showMessage(getString(R.string.error_message));
+            } else {
+                updateRightCurrency();
+            }
+        }
+    }
+
+    private class SetRightCurrencyValueTask extends AsyncTask<Double, Void, Result> {
+        @Override
+        protected Result doInBackground(Double... params) {
+            try {
+                viewModel.setRightCurrencyValue(params[0]);
+                return new Result();
+            } catch (ApiErrorException e) {
+                Log.e(TAG, "doInBackground: error during SetRightCurrencyValueTask", e);
+                return new Result(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Result result) {
+            super.onPostExecute(result);
+            if (result.isError()) {
+                view.showMessage(getString(R.string.error_message));
+            } else {
+                updateLeftCurrency();
+            }
+        }
+    }
+
+    private class SetLeftCurrencyValueTask extends AsyncTask<Double, Void, Result> {
+        @Override
+        protected Result doInBackground(Double... params) {
+            try {
+                viewModel.setLeftCurrencyValue(params[0]);
+                return new Result();
+            } catch (ApiErrorException e) {
+                Log.e(TAG, "doInBackground: error during SetLeftCurrencyValueTask", e);
+                return new Result(e);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Result result) {
+            super.onPostExecute(result);
+            if (result.isError()) {
+                view.showMessage(getString(R.string.error_message));
+            } else {
+                updateRightCurrency();
+            }
+        }
+    }
+
+    /*
+    * Data class to make result and error handling that are happened in worker thread
+    * a little bit easier
+    */
+    private class Result<T> {
+        T data;
+        Throwable error;
+
+        public Result() {
+        }
+
+        public Result(T data) {
+            this.data = data;
+        }
+
+        public Result(Throwable error) {
+            this.error = error;
+        }
+
+        public boolean isError() {
+            return error != null;
         }
     }
 }

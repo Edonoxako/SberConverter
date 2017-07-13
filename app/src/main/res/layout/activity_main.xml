@@ -69,4 +69,14 @@
             android:textSize="30sp" />
     </android.support.v7.widget.LinearLayoutCompat>
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/text_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        tools:text="Error"
+        android:textSize="40sp"
+        android:visibility="gone"/>
+
 </android.support.v7.widget.LinearLayoutCompat>

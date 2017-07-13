@@ -32,26 +32,21 @@ public class ConverterViewModelImpl implements ConverterViewModel {
     }
 
     @Override
-    public void init() {
+    public void init() throws UnknownCurrencyException, ApiErrorException {
         this.leftCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreLeftCurrency());
         this.rightCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreRightCurrency());
         setLeftCurrencyValue(keeper.restoreLeftCurrencyValue());
     }
 
     @Override
-    public List<CurrencyRate> getAllRates() {
+    public List<CurrencyRate> getAllRates() throws ApiErrorException {
         if (rates == null) {
-            try {
-                rates = repository.getCurrencyRates();
-            } catch (ApiErrorException e) {
-                e.printStackTrace();
-                rates = Collections.emptyList();
-            }
+            rates = repository.getCurrencyRates();
         }
         return rates;
     }
 
-    private int findCurrencyIndexByCharCode(String charCode) {
+    private int findCurrencyIndexByCharCode(String charCode) throws UnknownCurrencyException, ApiErrorException {
         List<CurrencyRate> allRates = getAllRates();
         for (int i = 0; i < allRates.size(); i++) {
             CurrencyRate rate = allRates.get(i);
@@ -59,37 +54,29 @@ public class ConverterViewModelImpl implements ConverterViewModel {
                 return i;
             }
         }
-        return -1;
+        throw new UnknownCurrencyException("Unknown currency: " + charCode);
     }
 
     @Override
-    public void swap() {
-        int bufIndex = rightCurrencyIndex;
-        rightCurrencyIndex = leftCurrencyIndex;
-        leftCurrencyIndex = bufIndex;
-        setLeftCurrencyValue(leftCurrencyValue);
-    }
-
-    @Override
-    public void setRightCurrencyIndex(int index) {
+    public void setRightCurrencyIndex(int index) throws ApiErrorException {
         rightCurrencyIndex = index;
         evaluateFirstCurrencyValue();
     }
 
     @Override
-    public void setLeftCurrencyIndex(int index) {
+    public void setLeftCurrencyIndex(int index) throws ApiErrorException {
         leftCurrencyIndex = index;
         evaluateSecondCurrencyValue();
     }
 
     @Override
-    public void setLeftCurrencyValue(double value) {
+    public void setLeftCurrencyValue(double value) throws ApiErrorException {
         leftCurrencyValue = value;
         evaluateSecondCurrencyValue();
     }
 
     @Override
-    public void setRightCurrencyValue(double value) {
+    public void setRightCurrencyValue(double value) throws ApiErrorException {
         rightCurrencyValue = value;
         evaluateFirstCurrencyValue();
     }
@@ -116,21 +103,23 @@ public class ConverterViewModelImpl implements ConverterViewModel {
 
     @Override
     public void saveState() {
-        CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
-        CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
+        if (rates != null && !rates.isEmpty()) {
+            CurrencyRate leftCurrency = rates.get(leftCurrencyIndex);
+            CurrencyRate rightCurrency = rates.get(rightCurrencyIndex);
 
-        keeper.saveState(leftCurrency.getCharCode(),
-                rightCurrency.getCharCode(),
-                getLeftCurrencyValue());
+            keeper.saveState(leftCurrency.getCharCode(),
+                    rightCurrency.getCharCode(),
+                    getLeftCurrencyValue());
+        }
     }
 
-    private void evaluateFirstCurrencyValue() {
+    private void evaluateFirstCurrencyValue() throws ApiErrorException {
         CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
         CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
         leftCurrencyValue = evaluator.evaluate(rightCurrencyValue, rightCurrency, leftCurrency);
     }
 
-    private void evaluateSecondCurrencyValue() {
+    private void evaluateSecondCurrencyValue() throws ApiErrorException {
         CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
         CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
         rightCurrencyValue = evaluator.evaluate(leftCurrencyValue, leftCurrency, rightCurrency);

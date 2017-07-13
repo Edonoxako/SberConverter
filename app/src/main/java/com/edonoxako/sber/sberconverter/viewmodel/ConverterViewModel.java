@@ -1,6 +1,7 @@
 package com.edonoxako.sber.sberconverter.viewmodel;
 
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
+import com.edonoxako.sber.sberconverter.repository.api.ApiErrorException;
 
 import java.util.List;
 
@@ -9,19 +10,17 @@ import java.util.List;
  */
 
 public interface ConverterViewModel {
-    void init();
+    void init() throws UnknownCurrencyException, ApiErrorException;
 
-    List<CurrencyRate> getAllRates();
+    List<CurrencyRate> getAllRates() throws ApiErrorException;
 
-    void swap();
+    void setRightCurrencyIndex(int index) throws ApiErrorException;
 
-    void setRightCurrencyIndex(int index);
+    void setLeftCurrencyIndex(int index) throws ApiErrorException;
 
-    void setLeftCurrencyIndex(int index);
+    void setLeftCurrencyValue(double value) throws ApiErrorException;
 
-    void setLeftCurrencyValue(double value);
-
-    void setRightCurrencyValue(double value);
+    void setRightCurrencyValue(double value) throws ApiErrorException;
 
     int getLeftCurrencyIndex();
 

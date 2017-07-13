@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     private AppCompatSpinner spinnerCurrencySecond;
     private AppCompatEditText editNominalFirst;
     private AppCompatEditText editNominalSecond;
+    private AppCompatTextView textErrorMessage;
+    private LinearLayoutCompat layoutFirstCurrency;
+    private LinearLayoutCompat layoutSecondCurrency;
 
     private ConverterPresenter presenter;
 
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
         spinnerCurrencySecond = (AppCompatSpinner) findViewById(R.id.spinner_currency_second);
         editNominalFirst = (AppCompatEditText) findViewById(R.id.edit_nominal_first);
         editNominalSecond = (AppCompatEditText) findViewById(R.id.edit_nominal_second);
+        textErrorMessage = (AppCompatTextView) findViewById(R.id.text_error);
+        layoutFirstCurrency = (LinearLayoutCompat) findViewById(R.id.layout_first_currency);
+        layoutSecondCurrency = (LinearLayoutCompat) findViewById(R.id.layout_second_currency);
 
         spinnerCurrencySecond.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -203,5 +211,13 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
 
         spinnerCurrencyFirst.setAdapter(adapter);
         spinnerCurrencySecond.setAdapter(adapter);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        layoutFirstCurrency.setVisibility(View.GONE);
+        layoutSecondCurrency.setVisibility(View.GONE);
+        textErrorMessage.setVisibility(View.VISIBLE);
+        textErrorMessage.setText(message);
     }
 }

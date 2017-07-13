@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SberConverter</string>
     <string name="hint_nominal">Номинал</string>
+    <string name="error_message">Не могу получить курсы валют. Проверьте подключение к интернету</string>
 </resources>

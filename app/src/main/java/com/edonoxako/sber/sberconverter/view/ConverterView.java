@@ -14,4 +14,5 @@ public interface ConverterView {
     void showLeftCurrencyValue(double value);
     void showRightCurrencyValue(double value);
     void setCurrencyRatesList(List<CurrencyRate> rates);
+    void showMessage(String message);
 }
