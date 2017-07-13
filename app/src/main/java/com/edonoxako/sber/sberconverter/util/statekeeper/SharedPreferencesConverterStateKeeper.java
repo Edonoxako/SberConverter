@@ -10,13 +10,13 @@ import android.preference.PreferenceManager;
 
 public class SharedPreferencesConverterStateKeeper implements ConverterStateKeeper {
 
-    private static final String PREF_LEFT_CURRENCY = "leftCurrency";
-    private static final String PREF_RIGHT_CURRENCY = "rightCurrency";
-    private static final String PREF_LEFT_CURRENCY_VALUE = "leftCurrencyValue";
+    private static final String PREF_FIRST_CURRENCY = "firstCurrency";
+    private static final String PREF_SECOND_CURRENCY = "secondCurrency";
+    private static final String PREF_FIRST_CURRENCY_VALUE = "firstCurrencyValue";
 
-    private static final String DEFAULT_LEFT_CURRENCY = "EUR";
-    private static final String DEFAULT_RIGHT_CURRENCY = "USD";
-    private static final int DEFAULT_LEFT_CURRENCY_VALUE = 1;
+    private static final String DEFAULT_FIRST_CURRENCY = "EUR";
+    private static final String DEFAULT_SECOND_CURRENCY = "USD";
+    private static final int DEFAULT_FIRST_CURRENCY_VALUE = 1;
 
     private final SharedPreferences preferences;
 
@@ -25,26 +25,26 @@ public class SharedPreferencesConverterStateKeeper implements ConverterStateKeep
     }
 
     @Override
-    public void saveState(String leftCurrencyCharCode, String rightCurrencyCharCode, double leftCurrencyValue) {
+    public void saveState(String firstCurrencyCharCode, String secondCurrencyCharCode, double firstCurrencyValue) {
         preferences.edit()
-                .putString(PREF_LEFT_CURRENCY, leftCurrencyCharCode)
-                .putString(PREF_RIGHT_CURRENCY, rightCurrencyCharCode)
-                .putFloat(PREF_LEFT_CURRENCY_VALUE, (float) leftCurrencyValue)
+                .putString(PREF_FIRST_CURRENCY, firstCurrencyCharCode)
+                .putString(PREF_SECOND_CURRENCY, secondCurrencyCharCode)
+                .putFloat(PREF_FIRST_CURRENCY_VALUE, (float) firstCurrencyValue)
                 .apply();
     }
 
     @Override
-    public String restoreLeftCurrency() {
-        return preferences.getString(PREF_LEFT_CURRENCY, DEFAULT_LEFT_CURRENCY);
+    public String restoreFirstCurrency() {
+        return preferences.getString(PREF_FIRST_CURRENCY, DEFAULT_FIRST_CURRENCY);
     }
 
     @Override
-    public String restoreRightCurrency() {
-        return preferences.getString(PREF_RIGHT_CURRENCY, DEFAULT_RIGHT_CURRENCY);
+    public String restoreSecondCurrency() {
+        return preferences.getString(PREF_SECOND_CURRENCY, DEFAULT_SECOND_CURRENCY);
     }
 
     @Override
-    public double restoreLeftCurrencyValue() {
-        return preferences.getFloat(PREF_LEFT_CURRENCY_VALUE, DEFAULT_LEFT_CURRENCY_VALUE);
+    public double restoreFirstCurrencyValue() {
+        return preferences.getFloat(PREF_FIRST_CURRENCY_VALUE, DEFAULT_FIRST_CURRENCY_VALUE);
     }
 }

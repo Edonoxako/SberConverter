@@ -9,10 +9,10 @@ import java.util.List;
  */
 
 public interface ConverterView {
-    void showLeftCurrency(int currencyCodeIndex);
-    void showRightCurrency(int currencyCodeIndex);
-    void showLeftCurrencyValue(double value);
-    void showRightCurrencyValue(double value);
+    void showFirstCurrency(int currencyCodeIndex);
+    void showSecondCurrency(int currencyCodeIndex);
+    void showFirstCurrencyValue(double value);
+    void showSecondCurrencyValue(double value);
     void setCurrencyRatesList(List<CurrencyRate> rates);
     void showMessage(String message);
 }

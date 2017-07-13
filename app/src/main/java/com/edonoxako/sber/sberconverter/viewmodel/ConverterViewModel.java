@@ -14,21 +14,21 @@ public interface ConverterViewModel {
 
     List<CurrencyRate> getAllRates() throws ApiErrorException;
 
-    void setRightCurrencyIndex(int index) throws ApiErrorException;
+    void setSecondCurrencyIndex(int index) throws ApiErrorException;
 
-    void setLeftCurrencyIndex(int index) throws ApiErrorException;
+    void setFirstCurrencyIndex(int index) throws ApiErrorException;
 
-    void setLeftCurrencyValue(double value) throws ApiErrorException;
+    void setFirstCurrencyValue(double value) throws ApiErrorException;
 
-    void setRightCurrencyValue(double value) throws ApiErrorException;
+    void setSecondCurrencyValue(double value) throws ApiErrorException;
 
-    int getLeftCurrencyIndex();
+    int getFirstCurrencyIndex();
 
-    int getRightCurrencyIndex();
+    int getSecondCurrencyIndex();
 
-    double getLeftCurrencyValue();
+    double getFirstCurrencyValue();
 
-    double getRightCurrencyValue();
+    double getSecondCurrencyValue();
 
     void saveState();
 }

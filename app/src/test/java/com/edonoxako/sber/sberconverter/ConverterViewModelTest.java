@@ -45,9 +45,9 @@ public class ConverterViewModelTest {
     @Before
     public void setUp() throws Exception {
         when(repository.getCurrencyRates()).thenReturn(Arrays.asList(usdRate, rubRate, eurRate));
-        when(keeper.restoreLeftCurrency()).thenReturn("USD");
-        when(keeper.restoreRightCurrency()).thenReturn("RUB");
-        when(keeper.restoreLeftCurrencyValue()).thenReturn(1d);
+        when(keeper.restoreFirstCurrency()).thenReturn("USD");
+        when(keeper.restoreSecondCurrency()).thenReturn("RUB");
+        when(keeper.restoreFirstCurrencyValue()).thenReturn(1d);
         when(evaluator.evaluate(eq(1d), eq(usdRate), eq(rubRate))).thenReturn(60.5);
         when(evaluator.evaluate(eq(1d), eq(rubRate), eq(usdRate))).thenReturn(1 / 60.5);
         when(evaluator.evaluate(eq(1d), eq(eurRate), eq(usdRate))).thenReturn(65.5 / 60.5);
@@ -58,13 +58,13 @@ public class ConverterViewModelTest {
 
     @Test
     public void testSetLeftCurrency() throws Exception {
-        viewModel.setRightCurrencyIndex(RUB_INDEX);
-        viewModel.setLeftCurrencyIndex(USD_INDEX);
-        viewModel.setLeftCurrencyValue(1d);
-        int leftCurrencyIndex = viewModel.getLeftCurrencyIndex();
-        int rightCurrencyIndex = viewModel.getRightCurrencyIndex();
-        double leftValue = viewModel.getLeftCurrencyValue();
-        double rightValue = viewModel.getRightCurrencyValue();
+        viewModel.setSecondCurrencyIndex(RUB_INDEX);
+        viewModel.setFirstCurrencyIndex(USD_INDEX);
+        viewModel.setFirstCurrencyValue(1d);
+        int leftCurrencyIndex = viewModel.getFirstCurrencyIndex();
+        int rightCurrencyIndex = viewModel.getSecondCurrencyIndex();
+        double leftValue = viewModel.getFirstCurrencyValue();
+        double rightValue = viewModel.getSecondCurrencyValue();
 
         assertEquals(USD_INDEX, leftCurrencyIndex);
         assertEquals(RUB_INDEX, rightCurrencyIndex);
@@ -74,13 +74,13 @@ public class ConverterViewModelTest {
 
     @Test
     public void testSetRightCurrency() throws Exception {
-        viewModel.setLeftCurrencyIndex(USD_INDEX);
-        viewModel.setRightCurrencyIndex(RUB_INDEX);
-        viewModel.setRightCurrencyValue(1d);
-        int leftCurrencyIndex = viewModel.getLeftCurrencyIndex();
-        int rightCurrencyIndex = viewModel.getRightCurrencyIndex();
-        double leftValue = viewModel.getLeftCurrencyValue();
-        double rightValue = viewModel.getRightCurrencyValue();
+        viewModel.setFirstCurrencyIndex(USD_INDEX);
+        viewModel.setSecondCurrencyIndex(RUB_INDEX);
+        viewModel.setSecondCurrencyValue(1d);
+        int leftCurrencyIndex = viewModel.getFirstCurrencyIndex();
+        int rightCurrencyIndex = viewModel.getSecondCurrencyIndex();
+        double leftValue = viewModel.getFirstCurrencyValue();
+        double rightValue = viewModel.getSecondCurrencyValue();
 
         assertEquals(USD_INDEX, leftCurrencyIndex);
         assertEquals(RUB_INDEX, rightCurrencyIndex);
@@ -90,13 +90,13 @@ public class ConverterViewModelTest {
 
     @Test
     public void testChangeCurrency() throws Exception {
-        viewModel.setLeftCurrencyIndex(RUB_INDEX);
-        viewModel.setRightCurrencyIndex(USD_INDEX);
-        viewModel.setLeftCurrencyValue(1d);
-        viewModel.setLeftCurrencyIndex(EUR_INDEX);
+        viewModel.setFirstCurrencyIndex(RUB_INDEX);
+        viewModel.setSecondCurrencyIndex(USD_INDEX);
+        viewModel.setFirstCurrencyValue(1d);
+        viewModel.setFirstCurrencyIndex(EUR_INDEX);
 
-        double leftCurrencyValue = viewModel.getLeftCurrencyValue();
-        double rightCurrencyValue = viewModel.getRightCurrencyValue();
+        double leftCurrencyValue = viewModel.getFirstCurrencyValue();
+        double rightCurrencyValue = viewModel.getSecondCurrencyValue();
 
         assertEquals(1d, leftCurrencyValue, 0.001);
         assertEquals(65.5 / 60.5, rightCurrencyValue, 0.001);

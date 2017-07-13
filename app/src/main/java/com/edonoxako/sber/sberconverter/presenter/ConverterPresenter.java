@@ -5,9 +5,9 @@ package com.edonoxako.sber.sberconverter.presenter;
  */
 
 public interface ConverterPresenter {
-    void setRightCurrencyIndex(int currencyIndex);
-    void setLeftCurrencyIndex(int currencyIndex);
-    void setRightCurrencyValue(double value);
-    void setLeftCurrencyValue(double value);
+    void setSecondCurrencyIndex(int currencyIndex);
+    void setFirstCurrencyIndex(int currencyIndex);
+    void setSecondCurrencyValue(double value);
+    void setFirstCurrencyValue(double value);
     void refreshRates();
 }

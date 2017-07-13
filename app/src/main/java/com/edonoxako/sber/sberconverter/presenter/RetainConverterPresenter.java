@@ -57,22 +57,22 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
     }
 
     @Override
-    public void setRightCurrencyIndex(int currencyIndex) {
+    public void setSecondCurrencyIndex(int currencyIndex) {
         new SetRightCurrencyTask().execute(currencyIndex);
     }
 
     @Override
-    public void setLeftCurrencyIndex(int currencyIndex) {
+    public void setFirstCurrencyIndex(int currencyIndex) {
         new SetLeftCurrencyTask().execute(currencyIndex);
     }
 
     @Override
-    public void setRightCurrencyValue(double value) {
+    public void setSecondCurrencyValue(double value) {
         new SetRightCurrencyValueTask().execute(value);
     }
 
     @Override
-    public void setLeftCurrencyValue(double value) {
+    public void setFirstCurrencyValue(double value) {
         new SetLeftCurrencyValueTask().execute(value);
     }
 
@@ -87,13 +87,13 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
     }
 
     private void updateLeftCurrency() {
-        view.showLeftCurrency(viewModel.getLeftCurrencyIndex());
-        view.showLeftCurrencyValue(viewModel.getLeftCurrencyValue());
+        view.showFirstCurrency(viewModel.getFirstCurrencyIndex());
+        view.showFirstCurrencyValue(viewModel.getFirstCurrencyValue());
     }
 
     private void updateRightCurrency() {
-        view.showRightCurrency(viewModel.getRightCurrencyIndex());
-        view.showRightCurrencyValue(viewModel.getRightCurrencyValue());
+        view.showSecondCurrency(viewModel.getSecondCurrencyIndex());
+        view.showSecondCurrencyValue(viewModel.getSecondCurrencyValue());
     }
 
 
@@ -129,7 +129,7 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         @Override
         protected Result doInBackground(Integer... params) {
             try {
-                viewModel.setRightCurrencyIndex(params[0]);
+                viewModel.setSecondCurrencyIndex(params[0]);
                 return new Result();
             } catch (ApiErrorException e) {
                 Log.e(TAG, "doInBackground: error during SetRightCurrencyTask", e);
@@ -152,7 +152,7 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         @Override
         protected Result doInBackground(Integer... params) {
             try {
-                viewModel.setLeftCurrencyIndex(params[0]);
+                viewModel.setFirstCurrencyIndex(params[0]);
                 return new Result();
             } catch (ApiErrorException e) {
                 Log.e(TAG, "doInBackground: error during SetRightCurrencyTask", e);
@@ -175,7 +175,7 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         @Override
         protected Result doInBackground(Double... params) {
             try {
-                viewModel.setRightCurrencyValue(params[0]);
+                viewModel.setSecondCurrencyValue(params[0]);
                 return new Result();
             } catch (ApiErrorException e) {
                 Log.e(TAG, "doInBackground: error during SetRightCurrencyValueTask", e);
@@ -198,7 +198,7 @@ public class RetainConverterPresenter extends Fragment implements ConverterPrese
         @Override
         protected Result doInBackground(Double... params) {
             try {
-                viewModel.setLeftCurrencyValue(params[0]);
+                viewModel.setFirstCurrencyValue(params[0]);
                 return new Result();
             } catch (ApiErrorException e) {
                 Log.e(TAG, "doInBackground: error during SetLeftCurrencyValueTask", e);

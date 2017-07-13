@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!notUserSecondCurrencyInput) {
-                    presenter.setRightCurrencyIndex(position);
+                    presenter.setSecondCurrencyIndex(position);
                     notUserSecondCurrencyInput = true;
                 }
             }
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!notUserFirstCurrencyInput) {
-                    presenter.setLeftCurrencyIndex(position);
+                    presenter.setFirstCurrencyIndex(position);
                     notUserFirstCurrencyInput = true;
                 }
             }
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
                     } else {
                         value = currencyFormatter.parse(s.toString()).doubleValue();
                     }
-                    presenter.setLeftCurrencyValue(value);
+                    presenter.setFirstCurrencyValue(value);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
                     } else {
                         value = currencyFormatter.parse(s.toString()).doubleValue();
                     }
-                    presenter.setRightCurrencyValue(value);
+                    presenter.setSecondCurrencyValue(value);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -186,24 +186,24 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     }
 
     @Override
-    public void showLeftCurrency(int currencyCodeIndex) {
+    public void showFirstCurrency(int currencyCodeIndex) {
         spinnerCurrencyFirst.setSelection(currencyCodeIndex);
     }
 
     @Override
-    public void showRightCurrency(int currencyCodeIndex) {
+    public void showSecondCurrency(int currencyCodeIndex) {
         spinnerCurrencySecond.setSelection(currencyCodeIndex);
     }
 
     @Override
-    public void showLeftCurrencyValue(double value) {
+    public void showFirstCurrencyValue(double value) {
         String formattedValue = currencyFormatter.format(value);
         notUserCurrencyValueInput = true;
         editNominalFirst.setText(formattedValue);
     }
 
     @Override
-    public void showRightCurrencyValue(double value) {
+    public void showSecondCurrencyValue(double value) {
         String formattedValue = currencyFormatter.format(value);
         notUserCurrencyValueInput = true;
         editNominalSecond.setText(formattedValue);

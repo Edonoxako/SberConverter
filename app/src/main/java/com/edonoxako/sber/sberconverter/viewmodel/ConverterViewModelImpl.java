@@ -6,7 +6,6 @@ import com.edonoxako.sber.sberconverter.evaluator.ExchangeRateEvaluator;
 import com.edonoxako.sber.sberconverter.model.CurrencyRate;
 import com.edonoxako.sber.sberconverter.repository.CurrencyRepository;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,10 +19,10 @@ public class ConverterViewModelImpl implements ConverterViewModel {
     private final ConverterStateKeeper keeper;
 
     private List<CurrencyRate> rates;
-    private int leftCurrencyIndex;
-    private int rightCurrencyIndex;
-    private double leftCurrencyValue;
-    private double rightCurrencyValue;
+    private int firstCurrencyIndex;
+    private int secondCurrencyIndex;
+    private double firstCurrencyValue;
+    private double secondCurrencyValue;
 
     public ConverterViewModelImpl(ExchangeRateEvaluator evaluator, CurrencyRepository repository, ConverterStateKeeper keeper) {
         this.evaluator = evaluator;
@@ -33,9 +32,9 @@ public class ConverterViewModelImpl implements ConverterViewModel {
 
     @Override
     public void init() throws UnknownCurrencyException, ApiErrorException {
-        this.leftCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreLeftCurrency());
-        this.rightCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreRightCurrency());
-        setLeftCurrencyValue(keeper.restoreLeftCurrencyValue());
+        this.firstCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreFirstCurrency());
+        this.secondCurrencyIndex = findCurrencyIndexByCharCode(keeper.restoreSecondCurrency());
+        setFirstCurrencyValue(keeper.restoreFirstCurrencyValue());
     }
 
     @Override
@@ -57,71 +56,63 @@ public class ConverterViewModelImpl implements ConverterViewModel {
         throw new UnknownCurrencyException("Unknown currency: " + charCode);
     }
 
-    @Override
-    public void setRightCurrencyIndex(int index) throws ApiErrorException {
-        rightCurrencyIndex = index;
+    public void setSecondCurrencyIndex(int index) throws ApiErrorException {
+        secondCurrencyIndex = index;
         evaluateFirstCurrencyValue();
     }
 
-    @Override
-    public void setLeftCurrencyIndex(int index) throws ApiErrorException {
-        leftCurrencyIndex = index;
+    public void setFirstCurrencyIndex(int index) throws ApiErrorException {
+        firstCurrencyIndex = index;
         evaluateSecondCurrencyValue();
     }
 
-    @Override
-    public void setLeftCurrencyValue(double value) throws ApiErrorException {
-        leftCurrencyValue = value;
+    public void setFirstCurrencyValue(double value) throws ApiErrorException {
+        firstCurrencyValue = value;
         evaluateSecondCurrencyValue();
     }
 
-    @Override
-    public void setRightCurrencyValue(double value) throws ApiErrorException {
-        rightCurrencyValue = value;
+    public void setSecondCurrencyValue(double value) throws ApiErrorException {
+        secondCurrencyValue = value;
         evaluateFirstCurrencyValue();
     }
 
-    @Override
-    public int getLeftCurrencyIndex() {
-        return leftCurrencyIndex;
+    public int getFirstCurrencyIndex() {
+        return firstCurrencyIndex;
     }
 
-    @Override
-    public int getRightCurrencyIndex() {
-        return rightCurrencyIndex;
+    public int getSecondCurrencyIndex() {
+        return secondCurrencyIndex;
     }
 
-    @Override
-    public double getLeftCurrencyValue() {
-        return leftCurrencyValue;
+    public double getFirstCurrencyValue() {
+        return firstCurrencyValue;
     }
 
-    @Override
-    public double getRightCurrencyValue() {
-        return rightCurrencyValue;
+    public double getSecondCurrencyValue() {
+        return secondCurrencyValue;
     }
 
     @Override
     public void saveState() {
         if (rates != null && !rates.isEmpty()) {
-            CurrencyRate leftCurrency = rates.get(leftCurrencyIndex);
-            CurrencyRate rightCurrency = rates.get(rightCurrencyIndex);
+            CurrencyRate leftCurrency = rates.get(firstCurrencyIndex);
+            CurrencyRate rightCurrency = rates.get(secondCurrencyIndex);
 
             keeper.saveState(leftCurrency.getCharCode(),
                     rightCurrency.getCharCode(),
-                    getLeftCurrencyValue());
+                    getFirstCurrencyValue());
         }
     }
 
     private void evaluateFirstCurrencyValue() throws ApiErrorException {
-        CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
-        CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
-        leftCurrencyValue = evaluator.evaluate(rightCurrencyValue, rightCurrency, leftCurrency);
+        CurrencyRate leftCurrency = getAllRates().get(firstCurrencyIndex);
+        CurrencyRate rightCurrency = getAllRates().get(secondCurrencyIndex);
+        firstCurrencyValue = evaluator.evaluate(secondCurrencyValue, rightCurrency, leftCurrency);
     }
 
     private void evaluateSecondCurrencyValue() throws ApiErrorException {
-        CurrencyRate leftCurrency = getAllRates().get(leftCurrencyIndex);
-        CurrencyRate rightCurrency = getAllRates().get(rightCurrencyIndex);
-        rightCurrencyValue = evaluator.evaluate(leftCurrencyValue, leftCurrency, rightCurrency);
+        CurrencyRate leftCurrency = getAllRates().get(firstCurrencyIndex);
+        CurrencyRate rightCurrency = getAllRates().get(secondCurrencyIndex);
+        secondCurrencyValue = evaluator.evaluate(firstCurrencyValue, leftCurrency, rightCurrency);
     }
 }
